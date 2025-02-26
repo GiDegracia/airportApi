@@ -4,6 +4,7 @@
  */
 package local.gigi.airports.repositories;
 
+import java.util.List;
 import local.gigi.airports.entities.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,5 +14,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface AirportRepository extends JpaRepository<Airport, Long>{
-    
+        
+        List<Airport> findByCityIgnoreCase(String city);
+        
 }
+    
