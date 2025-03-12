@@ -3,6 +3,7 @@ package local.gigi.airports.service;
 
 import local.gigi.airports.repositories.AirportRepository;
 import java.util.List;
+import local.gigi.airports.DTO.AirportMinDTO;
 import local.gigi.airports.entities.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,11 @@ public class AirportService {
         List<Airport> result = airportRepository.findByCityIgnoreCase(city);
         return result;
     }
-    
+    public List<AirportMinDTO> findByCountry(String country){
+        List<Airport> resultAirport = airportRepository.findByCountryIgnoreCase(country);
+        
+        List<AirportMinDTO>resultDTO = resultAirport.stream()
+                .map(x -> new AirportMinDTO(x)).toList();
+        return resultDTO;
+    }
 }

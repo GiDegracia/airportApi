@@ -3,6 +3,7 @@ package local.gigi.airports.controllers;
 
 import local.gigi.airports.service.AirportService;
 import java.util.List;
+import local.gigi.airports.DTO.AirportMinDTO;
 import local.gigi.airports.entities.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +33,23 @@ public class AirportController {
         return result;
     }
     @GetMapping("/city/{cityName}")
-    public ResponseEntity<List<Airport>> findByCityIgnoreCAse(@PathVariable String cityName) {
+    public ResponseEntity<List<Airport>> findByCityIgnoreCase(@PathVariable String cityName) {
         List<Airport> result = airportService.findByCity(cityName); 
         
+        if (result.isEmpty()) {
+            //Ops.. lista vazia...
+            //notFound devolve 404
+            return ResponseEntity.notFound().build();
+            
+        } else {
+            //Eba!! Tem dados!
+            return ResponseEntity.ok(result);
+        }
+    }
+    @GetMapping("/country/{countryName}")
+    public ResponseEntity<List<AirportMinDTO>> findByCountryIgnoreCase(@PathVariable String countryName) {
+        
+        List<AirportMinDTO> result = airportService.findByCountry(countryName); 
         if (result.isEmpty()) {
             //Ops.. lista vazia...
             //notFound devolve 404
